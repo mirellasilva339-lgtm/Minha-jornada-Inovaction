@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Minha Jornada na Inovaction — SANTOS INOVACTION STARTUPS</title>
+<style>
+  /* --- Variáveis CSS & Cores --- */
+  :root{
+    /* Cores Primárias (Logo e Destaque) */
+    --azul-escuro:#0a2342;
+    --azul-medio:#1d3557;
+    --degrade-start:#3aa0ff;
+    --degrade-end:#7b4cff;
+    --accent:#2a9d8f;
+    --pink-october:#d63384; 
+    /* Cores do Tema Escuro (DARK MODE - PADRÃO) */
+    --bg:#121212; 
+    --card:#1f1f1f; 
+    --text:#e0e0e0; 
+    --muted:#a0a0a0; 
+    --input-bg:#333333; 
+    --input-border:#4f4f4f; 
+    --hover-dark:#2a2a2a; 
+    --radius:12px;
+    /* Variáveis do Tema Claro (LIGHT MODE) */
+    --light-bg:#ffffff;
+    --light-card:#f5f5f5;
+    --light-text:#1f1f1f;
+    --light-muted:#666666;
+    --light-input-bg:#e9e9e9;
+    --light-input-border:#cccccc;
+  }
+  
+  /* NOVO: Estilos para o Tema Claro (Aplicados ao body.light-theme) */
+  body.light-theme {
+      background-color: var(--light-bg);
+      color: var(--light-text);
+  }
+  body.light-theme h2, body.light-theme h3 { color: var(--light-text); }
+  body.light-theme header { 
+    background-color: var(--light-bg); 
+    color: var(--light-text); 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--light-input-border);
+  }
+  body.light-theme header .online-status { color: var(--light-muted); }
+  body.light-theme .card { 
+    background: var(--light-card); 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
+  }
+  body.light-theme .tab { 
+    background: var(--light-input-bg); 
+    border-color: var(--light-input-border); 
+    color: var(--light-muted);
+  }
+  body.light-theme .tab:hover { background: var(--light-input-border); color: var(--light-text); }
+  body.light-theme input, body.light-theme select, body.light-theme textarea {
+    background: var(--light-bg); 
+    border-color: var(--light-input-border); 
+    color: var(--light-text);
+  }
+  body.light-theme .course { background: var(--light-input-bg); }
+  body.light-theme .course.completed { background: #d0f0cc; border-left-color:var(--accent)}
+  body.light-theme .progress-bar { background: var(--light-input-bg); }
+  body.light-theme table th { background: var(--azul-escuro); color: white; }
+  body.light-theme table th, body.light-theme table td { border-color: var(--light-input-border); }
+  body.light-theme .about-card, body.light-theme .prev-card, body.light-theme .calendar-event { background: var(--light-card); border: 1px solid var(--light-input-border); }
+  body.light-theme #leaderboard-list .course { background: var(--light-input-bg); }
+
+  /* --- Base --- */
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h2, h3{margin:0 0 10px 0; font-weight:700; color:var(--text)} 
+  p{margin-top:0; margin-bottom:12px}
+  .small{font-size:13px;color:var(--muted)}
+  .center{text-align:center}
+  
+  /* --- Estrutura e Container --- */
+  header{
+    background-color: #0d0d0d; 
+    color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.4);
+    border-bottom: 1px solid #333;
+  }
+  header .logo{
+    width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--degrade-start),var(--degrade-end));
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;
+    box-shadow:0 4px 12px rgba(10,35,66,0.25);
+  }
+  header .brand{font-size:18px;font-weight:700}
+  header .online-status { font-size:12px; color: var(--muted); margin-top: 4px; display: block; }
+  .container{max-width:880px;margin:20px auto;padding:10px}
+  
+  /* --- Abas de Navegação (Tabs) --- */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+  .tab{
+    background:var(--card); 
+    border:1px solid var(--input-border); 
+    padding:10px 16px;
+    border-radius:20px;cursor:pointer;font-weight:600;color:var(--muted); 
+    transition:background .2s, color .2s, box-shadow .2s;
+  }
+  .tab:hover{background:var(--hover-dark); color:var(--text)} 
+  .tab.active{
+    background:linear-gradient(90deg,var(--azul-medio),var(--azul-escuro));
+    color:white;
+    border-color:var(--azul-escuro);
+    box-shadow:0 4px 12px rgba(13,30,44,0.3);
+  }
+  
+  /* --- Cartões (Cards) --- */
+  .card{
+    background:var(--card); 
+    border-radius:var(--radius);
+    padding:18px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3); 
+    margin-bottom:18px;
+    transition:all .3s ease-in-out;
+  }
+  
+  /* --- Formulário e Botões --- */
+  input, select, textarea{
+    width:100%;padding:12px;border-radius:8px;
+    border:1px solid var(--input-border); 
+    font-size:15px;margin-top:8px;
+    background:var(--input-bg); 
+    color:var(--text); 
+  }
+  
+  button{cursor:pointer; transition:transform 0.1s ease, opacity 0.1s ease, box-shadow 0.2s}
+  
+  .btn-primary{
+    background:linear-gradient(90deg,var(--degrade-start),var(--degrade-end));
+    color:white;border:none;font-weight:700;
+    padding:12px 18px;border-radius:8px;
+    box-shadow:0 4px 15px rgba(123, 76, 255, 0.4); 
+  }
+  .btn-primary:active{transform:scale(0.98); box-shadow:0 2px 8px rgba(123, 76, 255, 0.6);}
+  
+  .btn-ghost{
+    background:transparent;
+    border:2px solid var(--degrade-start); 
+    color:var(--degrade-start); 
+    padding:12px 18px;border-radius:8px;font-weight:600;
+  }
+  .btn-ghost:hover{background:rgba(58, 160, 255, 0.1); border-color: var(--degrade-start);} 
+  
+  .row{display:flex;gap:10px}
+  .col{flex:1}
+  .hidden{display:none}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  
+  /* --- Perfil e Progresso --- */
+  .profile{display:flex;gap:15px;align-items:center;}
+  .avatar{
+    width:72px;height:72px;border-radius:12px;
+    background:linear-gradient(135deg,var(--degrade-start),var(--degrade-end));
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:800;
+    box-shadow: 0 4px 12px rgba(123, 76, 255, 0.25);
+  }
+  .progress-bar{background:var(--input-bg);border-radius:10px;overflow:hidden;height:12px;width:100%}
+  .progress{height:100%;background:var(--accent);width:0%;transition:width .6s ease}
+  .course{
+    margin-top:12px;padding:14px;border-radius:8px;
+    background:var(--hover-dark); 
+    border-left:5px solid var(--azul-medio);
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+  }
+  body.light-theme .course { box-shadow:0 2px 5px rgba(0,0,0,0.05); }
+  .course.completed{background:#253835;border-left-color:var(--accent)} 
+  .flex-between{display:flex;justify-content:space-between;align-items:center}
+  .badge{
+    display:inline-block;padding:6px 10px;border-radius:999px;
+    background:var(--azul-medio);color:white;font-weight:600;font-size:13px;
+  }
+
+  /* --- Botão Flutuante de Ajuda/Feedback --- */
+  .floating-action-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--degrade-end); /* Cor Roxo */
+    color: white;
+    border: none;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(123, 76, 255, 0.6);
+    z-index: 1000;
+  }
+  .floating-action-btn:hover {
+    background: var(--degrade-start);
+    box-shadow: 0 6px 20px rgba(58, 160, 255, 0.6);
+  }
+
+  /* --- Estilo para Ranking na Home --- */
+  #leaderboard-list .course {
+      border-left: 5px solid var(--degrade-start); 
+      margin-top: 8px; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      background: var(--hover-dark);
+      padding: 10px 14px;
+  }
+  body.light-theme #leaderboard-list .course { background: var(--light-input-bg); }
+  #leaderboard-list .course:nth-child(1) { border-left-color: gold; }
+  #leaderboard-list .course:nth-child(2) { border-left-color: silver; }
+  #leaderboard-list .course:nth-child(3) { border-left-color: #cd7f32; /* Bronze */ }
+  #leaderboard-list .ranking-icon { min-width: 25px; text-align: center; }
+
+
+  /* --- NOVO: Estilo do Botão de Configurações (3 Pontinhos) --- */
+  #settings-menu-toggle {
+    margin-left: auto; /* Alinha o botão para a direita */
+    background: transparent;
+    color: var(--text);
+    border: none;
+    padding: 0;
+    font-size: 24px; 
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  body.light-theme #settings-menu-toggle { color: var(--light-text); }
+  
+  /* NOVO: Estilo para o botão de tema dentro do menu de configurações */
+  .theme-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 15px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 5px;
+  }
+  .theme-option-btn:hover {
+    background: var(--hover-dark);
+  }
+  body.light-theme .theme-option-btn { color: var(--light-text); }
+  body.light-theme .theme-option-btn:hover { background: var(--light-input-bg); }
+  
+
+  /* --- Demais estilos mantidos --- */
+  table{width:100%;border-collapse:collapse;font-size:14px; color:var(--text)}
+  th,td{padding:10px;border:1px solid var(--input-border);text-align:left}
+  th{background:var(--azul-escuro);color:white;font-weight:600}
+  .about-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:15px;margin-top:15px}
+  .about-card{
+    padding:15px;border-radius:8px;
+    background:var(--hover-dark); 
+    border-bottom:3px solid var(--degrade-start);
+  }
+  body.light-theme .about-card { background: var(--light-card); }
+  .about-card h4{margin-top:0; color:var(--text)}
+  .calendar-event{
+    border-left:4px solid var(--degrade-end);padding:10px;margin-bottom:10px;
+    background:var(--hover-dark); 
+    border-radius:6px;
+  }
+  body.light-theme .calendar-event { background: var(--light-input-bg); }
+  .calendar-event.workshop{border-left-color:var(--accent);}
+  .prev-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:15px;margin-top:15px}
+  .prev-card{
+    background:var(--hover-dark);
+    padding:15px;
+    border-radius:8px;
+    border-left:4px solid var(--pink-october);
+  }
+  body.light-theme .prev-card { background: var(--light-input-bg); }
+  .cv-section{margin-top:15px; padding-top:15px; border-top:1px solid var(--input-border)}
+  .cv-section h4{color:var(--degrade-start)}
+  footer{max-width:880px;margin:10px auto;text-align:center;color:var(--muted);font-size:13px;padding-bottom:10px}
+  
+  @media(max-width:640px){
+    .row{flex-direction:column}
+    .avatar{width:56px;height:56px}
+    header .brand{font-size:16px}
+    .tab{padding:8px 10px;font-size:14px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div id="logo-container" class="logo" aria-hidden="true"></div>
+  <div>
+    <div class="brand">SANTOS INOVACTION STARTUPS</div>
+    <div style="font-size:13px;opacity:.95">Minha Jornada na Inovaction</div>
+    <div id="online-status" class="online-status">... online</div>
+  </div>
+  <button id="settings-menu-toggle" onclick="switchTabByName('settings')" aria-label="Abrir Configurações">···</button>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" data-view="home" onclick="switchTab(event)">Home</button>
+    <button class="tab" data-view="courses" onclick="switchTab(event)">Jornada</button>
+    <button class="tab" data-view="cv" onclick="switchTab(event)">Perfil & CV</button>
+    <button class="tab" data-view="connections" onclick="switchTab(event)">Conexões & Biblioteca</button> 
+    <button class="tab" data-view="company" onclick="switchTab(event)">Empresa</button>
+    <button class="tab" data-view="events" onclick="switchTab(event)">Eventos</button>
+    <button class="tab" data-view="prevention" onclick="switchTab(event)">Saúde & Prevenção</button>
+    <button class="tab" data-view="admin" onclick="openAdminPrompt(event)">Admin</button>
+  </div>
+
+  <div id="view-home" class="card">
+    <div id="home-logged-out">
+      <div class="center">
+        <h2>Bem-vindo(a) à Minha Jornada</h2>
+        <p class="small">Acesse sua trilha personalizada informando seu nome e função.</p>
+      </div>
+      <input id="input-nome" placeholder="Seu nome completo"/>
+      <input id="input-funcao" placeholder="Função na empresa (ex: Marketing, RH, etc.)"/>
+      <div class="row" style="margin-top:15px">
+        <button class="btn-primary col" onclick="doLogin()">Acessar Jornada</button>
+        <button class="btn-ghost col" onclick="openAdminPrompt()">Modo Admin</button>
+      </div>
+    </div>
+
+    <div id="home-logged-in" class="hidden">
+      <div class="profile">
+        <div class="avatar" id="avatar-initials">SI</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-weight:800; font-size:17px" id="profile-name">Nome</div>
+              <div class="small" id="profile-role">Função</div>
+            </div>
+            <div style="text-align:right">
+              <div class="small">Pontos</div>
+              <div style="margin-top:4px"><span class="badge" id="profile-points">0</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="small">Progresso Geral</div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+              <div style="flex:1" class="progress-bar"><div id="global-progress" class="progress"></div></div>
+              <div id="global-percent" style="min-width:44px;text-align:right;font-weight:600">0%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="next-step"></div>
+
+      <div class="row" style="margin-top:18px">
+          <div class="col">
+              <div style="margin-top:0px">
+                <h3>Ranking (Top 3)</h3>
+                <div id="leaderboard-list">
+                    <div class="small">Faça o login para visualizar.</div>
+                </div>
+              </div>
+          </div>
+          <div class="col">
+              <div style="margin-top:0px">
+                <h3>Medalhas</h3>
+                <div id="medals" style="margin-top:8px" class="small">—</div>
+              </div>
+          </div>
+      </div>
+      <div style="margin-top:18px">
+        <h3>Sua Trilha Personalizada</h3>
+        <div id="user-courses"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" onclick="logout()">Sair da Conta</button>
+        <button class="btn-ghost" onclick="switchTabByName('cv')">Ver Perfil & CV</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="view-settings" class="card hidden">
+    <h2>Configurações e Ajuda</h2>
+    <p class="small">Personalize a interface e acesse opções de suporte.</p>
+
+    <div style="margin-top:20px; padding:15px; border:1px solid var(--input-border); border-radius:8px;">
+        <h3 style="margin-top:0;">Tema da Interface</h3>
+        <p class="small">Alterne entre o modo claro e escuro para melhor conforto visual.</p>
+        
+        <button class="theme-option-btn" onclick="toggleTheme()">
+            <span>Modo Claro/Escuro</span>
+            <span id="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <div style="margin-top:15px;">
+        <button class="btn-ghost" style="width:100%; border:1px solid; margin-bottom:10px;" onclick="showFeedback()">
+            💬 Enviar Sugestão / Feedback
+        </button>
+        <button class="btn-ghost" style="width:100%; border:1px solid;" onclick="alert('Simulando abertura da ajuda contextual...')">
+            ❓ Ajuda e FAQ
+        </button>
+    </div>
+    
+    <div style="margin-top:20px;">
+        <button class="btn-primary" onclick="switchTabByName('home')">Voltar à Home</button>
+    </div>
+  </div>
+  <div id="view-courses" class="card hidden">
+    <h2>Questionário & Recomendações</h2>
+    <p class="small">Responda para que possamos personalizar sua trilha de cursos.</p>
+
+    <label class="small">Qual a sua área principal de foco?</label>
+    <select id="select-area" onchange="onAreaChange()">
+      <option value="Desenvolvimento-FullStack">Desenvolvimento - Full Stack Developer</option>
+      <option value="Desenvolvimento-FrontEnd">Desenvolvimento - Front-End</option>
+      <option value="Desenvolvimento-BackEnd">Desenvolvimento - Back-End</option>
+      <option value="">--- Selecione outra área ---</option>
+      <option value="Marketing">Marketing</option>
+      <option value="RH">Recursos Humanos</option>
+      <option value="Financeiro">Financeiro</option>
+      <option value="Administrativo">Administrativo</option>
+      <option value="Design">Design</option>
+      <option value="Dados">Análise de Dados</option>
+      <option value="Vendas">Vendas</option>
+      <option value="Outra">Outra (especificar)</option>
+    </select>
+
+    <div id="other-area-field" class="hidden">
+      <input id="input-other-area" placeholder="Qual outra área? (ex: Jurídico, P&D)"/>
+    </div>
+
+    <label class="small" style="margin-top:15px; display:block">Alguma sugestão para a plataforma?</label>
+    <textarea id="input-suggestion" rows="2" placeholder="Digite sua sugestão ou pedido de curso..."></textarea>
+
+    <div class="row" style="margin-top:15px">
+      <button class="btn-primary col" onclick="submitQuestionnaire()">Salvar & Receber Trilhas</button>
+      <button class="btn-ghost col" onclick="switchTabByName('home')">Voltar</button>
+    </div>
+
+    <div id="recommended-area" style="margin-top:20px" class="hidden">
+      <h3>Recomendações de Cursos</h3>
+      <div id="recommended-list"></div>
+    </div>
+  </div>
+  
+  <div id="view-cv" class="card hidden">
+    <h2>Meu Perfil & Currículo</h2>
+    <p class="small">Edite suas informações e veja seu histórico de aprendizado.</p>
+    
+    <div class="profile" id="cv-profile-summary">
+      </div>
+
+    <div class="cv-section">
+      <h3>Edição de Currículo</h3>
+      <label class="small">Resumo Profissional (para seu CV interno):</label>
+      <textarea id="cv-resumo" rows="4" placeholder="Descreva brevemente sua experiência e objetivos..."></textarea>
+      
+      <label class="small" style="margin-top:15px; display:block">Experiência Recente:</label>
+      <input id="cv-experiencia" placeholder="Empresa, Posição e Período (ex: TechCorp, Analista, 2022-Atual)"/>
+
+      <label class="small" style="margin-top:15px; display:block">Habilidades Chave (separadas por vírgula):</label>
+      <input id="cv-habilidades" placeholder="ex: JavaScript, SQL, Liderança Ágil, UX Design"/>
+
+      <div class="actions">
+        <button class="btn-primary" onclick="saveCV()">Salvar Currículo</button>
+        <button class="btn-ghost" onclick="exportInternalCV()">Exportar CV Interno</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-connections" class="card hidden">
+    <h2>Conexões & Biblioteca de Conhecimento</h2>
+    <p class="small">Encontre colegas para mentoria e acesse recursos internos e externos.</p>
+    
+    <div class="row">
+        <div class="col">
+            <h3>Buscar Mentores (Mockup)</h3>
+            <p class="small">Filtre por expertise e conecte-se com líderes ou especialistas.</p>
+            <input placeholder="Ex: Liderança Ágil ou JavaScript" style="margin-bottom:10px"/>
+            <div id="mentors-list">
+                <div class="course" style="border-left-color:var(--azul-medio);">
+                    <strong>Ana Silva</strong> <span class="badge" style="background:#5a5a5a;">Liderança Ágil</span>
+                    <p class="small">Disponível para mentorias sobre metodologias ágeis e gestão de equipe.</p>
+                    <button class="btn-ghost" style="padding:5px 10px; font-size:12px; border-width:1px;" onclick="alert('Simulando envio de pedido de mentoria para Ana...')">Solicitar Mentoria</button>
+                </div>
+                <div class="course" style="border-left-color:var(--azul-medio);">
+                    <strong>Carlos Mello</strong> <span class="badge" style="background:var(--accent);">Desenvolvimento Full Stack</span>
+                    <p class="small">Especialista em Node.js, React e AWS. Agende um bate-papo técnico!</p>
+                    <button class="btn-ghost" style="padding:5px 10px; font-size:12px; border-width:1px;" onclick="alert('Simulando envio de pedido de mentoria para Carlos...')">Solicitar Mentoria</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h3>Biblioteca e Recursos</h3>
+            <p class="small">Acesso rápido a documentos internos e curadoria de conteúdo.</p>
+            <div id="library-list">
+                <div class="course" onclick="alert('Simulando abertura do Guia de Integração...')" style="cursor:pointer; border-left-color:var(--accent); background:var(--card);">
+                    <strong>Guia de Boas-Vindas 2024</strong>
+                    <p class="small">Manual para novos colaboradores (PDF).</p>
+                </div>
+                <div class="course" onclick="alert('Simulando acesso ao Artigo Externo...')" style="cursor:pointer; border-left-color:var(--degrade-start); background:var(--card);">
+                    <strong>Artigo: O Futuro da I.A. nos Negócios</strong>
+                    <p class="small">Conteúdo curado (Link Externo).</p>
+                </div>
+                <div class="course" onclick="alert('Simulando abertura da Política de Privacidade...')" style="cursor:pointer; border-left-color:var(--degrade-end); background:var(--card);">
+                    <strong>Política de Privacidade & Dados</strong>
+                    <p class="small">Documento Jurídico (Interno).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div id="view-company" class="card hidden">
+    <h2>Sobre a SANTOS INOVACTION STARTUPS</h2>
+    <p class="small">Nossa história e o que nos move.</p>
+
+    <div class="about-grid">
+      <div class="about-card" style="border-bottom-color:var(--accent)">
+        <h4>Missão</h4>
+        <p>Impulsionar startups com inovação e colaboração, criando um futuro de negócios sustentáveis e de alto impacto no ecossistema brasileiro.</p>
+      </div>
+      <div class="about-card" style="border-bottom-color:var(--degrade-start)">
+        <h4>Visão</h4>
+        <p>Ser a principal referência em aceleração de negócios, tecnologia e empreendedorismo no Brasil e na América Latina, até 2030.</p>
+      </div>
+      <div class="about-card" style="border-bottom-color:var(--pink-october)">
+        <h4>Valores</h4>
+        <p>Inovação • Colaboração • Diversidade • Aprendizado Contínuo • Sustentabilidade • Excelência • Foco no Cliente</p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <h3>Nossa História</h3>
+      <p>
+        A **Santos Inovaction Startups** foi fundada em 2017, em São Paulo, com o objetivo de transformar ideias inovadoras em negócios de sucesso.
+        Criada por empreendedores apaixonados por tecnologia, a empresa rapidamente se tornou um hub vital, apoiando startups de base tecnológica
+        e social, oferecendo mentorias especializadas, parcerias estratégicas e acesso a investidores. Com foco em resultados e,
+        principalmente, na valorização das pessoas e do aprendizado, conquistamos reconhecimento no ecossistema de inovação brasileiro.
+        Continuamos crescendo e investindo em nossa equipe, que é o coração da Inovaction.
+      </p>
+    </div>
+  </div>
+  
+  <div id="view-events" class="card hidden">
+    <h2>Eventos & Calendário</h2>
+    <p class="small">Marque sua participação em reuniões e workshops internos.</p>
+
+    <h3>Próximos Eventos</h3>
+    <div id="event-list">
+      <div class="calendar-event workshop">
+        <strong>Workshop: Mentalidade Ágil</strong>
+        <p class="small">18/Out - 14:00h | Online (Zoom)</p>
+        <button class="btn-primary btn-small" onclick="registerEvent(this, 'Workshop Ágil')" style="margin-top:6px; width:auto; padding:8px 15px">Participar</button>
+      </div>
+      <div class="calendar-event">
+        <strong>Reunião Geral - Resultados do Trimestre</strong>
+        <p class="small">25/Out - 10:00h | Sede São Paulo (Auditório)</p>
+        <button class="btn-primary btn-small" onclick="registerEvent(this, 'Reunião Trimestral')" style="margin-top:6px; width:auto; padding:8px 15px">Confirmar Presença</button>
+      </div>
+      <div class="calendar-event workshop">
+        <strong>Treinamento: Liderança para Inovação</strong>
+        <p class="small">08/Nov - 16:00h | Online (Teams)</p>
+        <button class="btn-primary btn-small" onclick="registerEvent(this, 'Treinamento Liderança')" style="margin-top:6px; width:auto; padding:8px 15px">Participar</button>
+      </div>
+    </div>
+    
+    <h3 style="margin-top:20px">Meus Agendamentos</h3>
+    <div id="my-events" class="small">Nenhum evento agendado.</div>
+  </div>
+
+  <div id="view-prevention" class="card hidden">
+    <h2>Saúde, Bem-estar & Prevenção</h2>
+    <p class="small">Conheça as campanhas anuais de conscientização e os eventos de saúde na Inovaction.</p>
+
+    <div class="prev-grid">
+      <div class="prev-card jan">
+        <h4>Janeiro Branco: Saúde Mental</h4>
+        <p class="small">O mês dedicado a promover a reflexão sobre o bem-estar emocional e psicológico. Cuide de sua mente!</p>
+        <p class="small">**Palestra: Gestão da Ansiedade no Ambiente de Trabalho** - 22/Jan | 10:00h.</p>
+      </div>
+      <div class="prev-card abr">
+        <h4>Abril Azul: Conscientização do Autismo</h4>
+        <p class="small">Mês de aumentar a conscientização e promover a inclusão social das pessoas com Transtorno do Espectro Autista (TEA).</p>
+        <p class="small">**Workshop: Inclusão e Neurodiversidade** - 05/Abr | 15:00h.</p>
+      </div>
+      <div class="prev-card" style="border-left-color:var(--pink-october)">
+        <h4>Outubro Rosa: Prevenção Feminina</h4>
+        <p class="small">Foco na prevenção e diagnóstico precoce do câncer de mama e de colo do útero. Seu cuidado é a maior inovação.</p>
+        <p class="small">**Webinar: A Importância da Mamografia** - 15/Out | 14:00h.</p>
+      </div>
+      <div class="prev-card nov">
+        <h4>Novembro Azul: Saúde Masculina</h4>
+        <p class="small">Conscientização sobre a importância da prevenção e do diagnóstico precoce do câncer de próstata e outras doenças masculinas.</p>
+        <p class="small">**Check-up Day: Exames de Rotina (Interno)** - 10/Nov | Dia Todo.</p>
+      </div>
+    </div>
+  </div>
+  <div id="view-admin-panel" class="card hidden">
+    <h2>Área Administrativa</h2>
+    <p class="small">Visualize colaboradores, exporte dados ou limpe o armazenamento local.</p>
+
+    <div style="overflow:auto;margin-top:8px">
+      <table id="admin-table">
+        <thead>
+          <tr><th>Nome</th><th>Função</th><th>Área</th><th>Sugestão</th><th>Pontos</th><th>Medalhas</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" onclick="exportCSV()">Exportar CSV</button>
+      <button class="btn-ghost" onclick="clearAll()">Limpar Registros (Local)</button>
+      <button class="btn-ghost" onclick="closeAdmin()">Fechar Admin</button>
+    </div>
+  </div>
+
+  <div id="view-feedback" class="card hidden">
+    <h3>Enviar Feedback</h3>
+    <p class="small">Sua opinião é valiosa. Envie sugestões, dúvidas ou problemas.</p>
+    <textarea id="fb-text" rows="3" placeholder="Conte-nos sua experiência ou o que podemos melhorar..."></textarea>
+    <div class="row" style="margin-top:10px">
+      <button class="btn-primary col" onclick="sendFeedback()">Enviar</button>
+      <button class="btn-ghost col" onclick="closeFeedbackView()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<footer>© SANTOS INOVACTION STARTUPS — Minha Jornada na Inovaction</footer>
+
+<button class="floating-action-btn" onclick="showFeedback()">💬</button>
+
+
+<script>
+/* ------------- EMBEDDED LOGO (Base64) ------------- */
+const EMBEDDED_LOGO = ""; 
+
+function renderLogo(){
+  const container = document.getElementById('logo-container');
+  if(EMBEDDED_LOGO && EMBEDDED_LOGO.startsWith('data:')){
+    container.innerHTML = '<img src="'+EMBEDDED_LOGO+'" alt="SANTOS INOVACTION" style="width:48px;height:48px;border-radius:8px;object-fit:contain"/>';
+    return;
+  }
+  // Fallback: SVG padrão (ícone de engrenagens / inovação)
+  container.innerHTML = `
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:6px">
+      <defs><linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#3aa0ff"/><stop offset="100%" stop-color="#7b4cff"/></linearGradient></defs>
+      <path d="M12 2C9.243 2 7 4.243 7 7c0 1.657.672 3.157 1.758 4.243C9.501 12 9 12.954 9 14v1h6v-1c0-1.046-.501-2-.758-2.757C16.328 10.157 17 8.657 17 7c0-2.757-2.243-5-5-5z" fill="url(#g1)"/>
+      <rect x="9" y="17" width="6" height="3" rx="1" fill="#0a2342"/>
+    </svg>`;
+}
+
+/* --- NOVO: Variável e Função de Online Status (Mockup) --- */
+let onlineUsers = Math.floor(Math.random() * 5) + 3; // 3 a 7 usuários online inicialmente
+
+function updateOnlineStatus(loggedUser) {
+    const statusElement = document.getElementById('online-status');
+    // Adiciona um usuário online se um novo login for detectado
+    if (loggedUser && !loggedUser.online) {
+        onlineUsers++;
+        loggedUser.online = true; // Marca como online na sessão atual (não salvo em storage)
+    }
+    // O status é um mockup do total de usuários ativos
+    statusElement.innerHTML = `<span style="color:var(--accent); font-weight:700;">●</span> ${onlineUsers} pessoas online`;
+}
+
+
+/* --- NOVO: Função de Toggle de Tema --- */
+function toggleTheme() {
+    const body = document.body;
+    const isLight = body.classList.toggle('light-theme');
+    const themeIconSpan = document.getElementById('theme-icon');
+    if (themeIconSpan) {
+        themeIconSpan.textContent = isLight ? '☀️' : '🌙';
+    }
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+
+/* ---------- Dados e utilitários (Local Storage) ---------- */
+const STORAGE = {
+  USERS: 'mi_users_v2',
+  CURRENT: 'mi_current_v2',
+  FEEDBACKS: 'mi_feedbacks_v2',
+  THEME: 'mi_theme'
+};
+
+const baseCoursesByArea = {
+  'Desenvolvimento-FullStack': [
+    {id:'fs1', title:'Fundamentos Node & React', duration:'30h', level:'Iniciante', points:20},
+    {id:'fs2', title:'APIs REST com Express', duration:'15h', level:'Pleno', points:12},
+    {id:'fs3', title:'Deployment e Cloud Básico', duration:'10h', level:'Pleno', points:10}
+  ],
+  'Desenvolvimento-FrontEnd': [
+    {id:'d1', title:'React - Front-end Moderno', duration:'25h', level:'Pleno', points:18},
+    {id:'d2', title:'UX e Acessibilidade', duration:'10h', level:'Iniciante', points:8}
+  ],
+  'Desenvolvimento-BackEnd': [
+    {id:'d3', title:'Node.js e APIs', duration:'20h', level:'Pleno', points:18},
+    {id:'d4', title:'Segurança de Aplicações', duration:'15h', level:'Pleno', points:12}
+  ],
+  Marketing: [{id:'m1', title:'Fundamentos de Marketing Digital', duration:'12h', level:'Iniciante', points:8},{id:'m2', title:'SEO e Conteúdo', duration:'10h', level:'Iniciante', points:7},{id:'m3', title:'Anúncios e Métricas (Ads)', duration:'15h', level:'Pleno', points:12}],
+  'Recursos Humanos': [{id:'r1', title:'Recrutamento e Seleção Prático', duration:'12h', level:'Iniciante', points:8},{id:'r2', title:'Cultura e Engajamento', duration:'10h', level:'Iniciante', points:7},{id:'r3', title:'Gestão de Desempenho', duration:'14h', level:'Pleno', points:12}],
+  Financeiro: [{id:'f1', title:'Controles Financeiros Básicos', duration:'10h', level:'Iniciante', points:8},{id:'f2', title:'Fluxo de Caixa e Orçamento', duration:'12h', level:'Pleno', points:12},{id:'f3', title:'KPIs Financeiros para Startups', duration:'8h', level:'Pleno', points:10}],
+  Administrativo: [{id:'a1', title:'Gestão Administrativa Eficiente', duration:'8h', level:'Iniciante', points:6},{id:'a2', title:'Processos e Documentação', duration:'10h', level:'Iniciante', points:7}],
+  Design: [{id:'ds1', title:'UX Básico e Prototipagem', duration:'10h', level:'Iniciante', points:8},{id:'ds2', title:'Design Visual e Ferramentas', duration:'12h', level:'Pleno', points:10}],
+  'Análise de Dados': [{id:'da1', title:'Introdução a Dados e SQL', duration:'12h', level:'Iniciante', points:10},{id:'da2', title:'Análise de Dados para Negócios', duration:'18h', level:'Pleno', points:14}],
+  Vendas: [{id:'v1', title:'Técnicas de Vendas Consultivas', duration:'10h', level:'Iniciante', points:8},{id:'v2', title:'Pipeline e CRM', duration:'12h', level:'Pleno', points:10}]
+};
+
+function load(key){ try{ return JSON.parse(localStorage.getItem(key)) || (key === STORAGE.USERS || key === STORAGE.FEEDBACKS ? [] : null); } catch(e){ return key === STORAGE.USERS || key === STORAGE.FEEDBACKS ? [] : null; } }
+function save(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+/* tabs */
+const viewMap = {
+    'home': 'view-home',
+    'courses': 'view-courses',
+    'company': 'view-company',
+    'events': 'view-events',
+    'prevention': 'view-prevention',
+    'admin': 'view-admin-panel',
+    'cv': 'view-cv',
+    'connections': 'view-connections',
+    'settings': 'view-settings',
+    'feedback': 'view-feedback'
+};
+
+function switchTab(e){ const view = e.currentTarget.getAttribute('data-view'); switchTabByName(view); }
+function switchTabByName(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>{ if(t.getAttribute('data-view')===name) t.classList.add('active'); });
+  
+  Object.keys(viewMap).forEach(key => {
+    const viewElement = document.getElementById(viewMap[key]);
+    if (viewElement) {
+      viewElement.classList.toggle('hidden', key !== name);
+    }
+  });
+  
+  if (name === 'cv') {
+      renderCVProfile(); 
+  }
+}
+
+/* LOGIN / USER */
+function doLogin(){
+  const nome = document.getElementById('input-nome').value.trim();
+  const funcao = document.getElementById('input-funcao').value.trim();
+  if(!nome || !funcao){ alert('Por favor preencha nome e função.'); return; }
+
+  let users = load(STORAGE.USERS);
+  let user = users.find(u=>u.nome===nome && u.funcao===funcao);
+  
+  const newUser = !user;
+  if(newUser){
+    user = { 
+      id: Date.now().toString(36), nome, funcao, questionario:null, pontos:0, medalhas:[], courses:[], events:[], created: new Date().toISOString(),
+      cv: { resumo: '', experiencia: '', habilidades: '' }
+    };
+    users.push(user); save(STORAGE.USERS, users);
+  }
+  localStorage.setItem(STORAGE.CURRENT, user.id);
+  
+  updateOnlineStatus(user); // MOCKUP: Atualiza o status de online
+  renderUser();
+  renderMyEvents(); 
+  switchTabByName('home');
+  document.getElementById('home-logged-out').classList.add('hidden');
+  document.getElementById('home-logged-in').classList.remove('hidden');
+  if(newUser || !user.questionario || !user.courses || user.courses.length===0){
+    setTimeout(()=>{ switchTabByName('courses'); }, 350);
+  }
+}
+
+/* render user */
+function renderUser(){
+  const id = localStorage.getItem(STORAGE.CURRENT);
+  if(!id) return logoutView();
+  const users = load(STORAGE.USERS);
+  const user = users.find(u=>u.id===id);
+  if(!user) return logoutView();
+
+  const nameParts = user.nome.split(' ').filter(s=>s.length > 0);
+  const initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase() : (nameParts[0] ? nameParts[0][0] : 'S').toUpperCase();
+  document.getElementById('avatar-initials').textContent = initials;
+
+  document.getElementById('profile-name').textContent = user.nome;
+  document.getElementById('profile-role').textContent = user.funcao;
+  document.getElementById('profile-points').textContent = user.pontos || 0;
+
+  const total = user.courses.length || 1;
+  const completed = user.courses.filter(c=>c.completed).length || 0;
+  const percent = Math.round((completed/total)*100);
+  document.getElementById('global-progress').style.width = percent + '%';
+  document.getElementById('global-percent').textContent = percent + '%';
+
+  document.getElementById('medals').textContent = (user.medalhas && user.medalhas.length) ? user.medalhas.join(' • ') : 'Nenhuma medalha ainda. Conclua cursos!';
+
+  const list = document.getElementById('user-courses');
+  list.innerHTML = '';
+  if(!user.courses || user.courses.length===0){
+    list.innerHTML = '<div class="small">Nenhuma trilha configurada. Responda o questionário na aba "Jornada" para receber recomendações.</div>';
+  } else {
+    user.courses.forEach(c=>{
+      const d = document.createElement('div');
+      d.className = 'course' + (c.completed ? ' completed' : '');
+      d.innerHTML = `
+        <div class="flex-between">
+          <div>
+            <strong>${c.title}</strong>
+            <div class="small">${c.duration} • ${c.level} • Pontos: ${c.points || 5}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="small">Progresso</div>
+            <div style="width:120px"><div class="progress-bar"><div class="progress" style="width:${c.progress||0}%"></div></div></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn-primary" ${c.completed ? 'disabled' : ''} onclick="completeCourse('${c.id}')">${c.completed ? 'Concluído ✅' : 'Concluir'}</button>
+          <button class="btn-ghost" onclick="addProgress('${c.id}', 25)">+25%</button>
+          ${c.completed ? `<button class="btn-ghost" style="border-color:#5a5a5a; color:#5a5a5a" onclick="viewCertificate('${c.title}')">Certificado 📜</button>` : ''} </div>
+      `;
+      list.appendChild(d);
+    });
+  }
+
+  // NOVO: Renderiza o Próximo Passo e o Ranking na Home
+  renderNextStep(user);
+  renderLeaderboard();
+}
+
+/* --- NOVO: Função para Próximo Passo na Home --- */
+function renderNextStep(user) {
+    const nextCourse = user.courses
+        ?.filter(c => !c.completed)
+        .sort((a, b) => a.progress - b.progress)[0];
+
+    const nextStepContainer = document.getElementById('next-step');
+    if (nextCourse) {
+        nextStepContainer.innerHTML = `
+            <div class="card" style="margin-top:20px; border-left:4px solid var(--accent); background:var(--hover-dark)">
+                <div style="font-size:14px; font-weight:600; color:var(--accent)">PRÓXIMO PASSO RECOMENDADO</div>
+                <div style="font-weight:700; font-size:17px; margin:5px 0;">${nextCourse.title}</div>
+                <div class="small">Seu progresso atual: ${nextCourse.progress || 0}%</div>
+                <button class="btn-primary" onclick="addProgress('${nextCourse.id}', 25)" style="margin-top:10px; width:auto; padding:8px 15px;">Continuar Estudo (+25%)</button>
+                <button class="btn-ghost" onclick="switchTabByName('courses')" style="margin-top:10px; margin-left:10px; width:auto; padding:8px 15px; border-width:1px;">Ver Trilha</button>
+            </div>
+        `;
+    } else if (user.courses && user.courses.length > 0 && user.courses.every(c => c.completed)) {
+        nextStepContainer.innerHTML = `
+            <div class="card center" style="margin-top:20px; background:var(--hover-dark); border:1px solid var(--accent);">
+                <div style="font-weight:700; font-size:16px;">✨ Parabéns! Você concluiu todos os cursos da sua trilha.</div>
+                <p class="small" style="margin-top:8px;">Visite a aba "Jornada" para sugerir novos temas ou buscar a próxima trilha.</p>
+            </div>
+        `;
+    } else {
+         nextStepContainer.innerHTML = '';
+    }
+}
+
+/* --- NOVO: Função para Renderizar Ranking --- */
+function renderLeaderboard() {
+  const users = load(STORAGE.USERS);
+  if (users.length === 0) return;
+
+  // Ordena por pontos (decrescente) e depois por número de cursos concluídos
+  const sortedUsers = users.sort((a, b) => {
+    if (b.pontos !== a.pontos) return b.pontos - a.pontos;
+    const aCompleted = a.courses?.filter(c => c.completed).length || 0;
+    const bCompleted = b.courses?.filter(c => c.completed).length || 0;
+    return bCompleted - aCompleted;
+  }).slice(0, 3); // Top 3
+
+  const list = document.getElementById('leaderboard-list');
+  list.innerHTML = sortedUsers.map((user, index) => {
+    const rank = index + 1;
+    const color = rank === 1 ? 'gold' : (rank === 2 ? 'silver' : '#cd7f32'); // Cores dos ícones
+    const icon = rank === 1 ? '🥇' : (rank === 2 ? '🥈' : '🥉');
+    const completedCount = user.courses?.filter(c => c.completed).length || 0;
+
+    return `
+      <div class="course">
+        <div class="ranking-icon" style="color:${color}; font-size:1.2em;">${icon}</div>
+        <div style="flex:1;">
+            <strong>${user.nome.split(' ')[0]}</strong> 
+            <span class="small" style="margin-left:5px;">(${user.funcao})</span>
+        </div>
+        <div style="text-align:right;">
+            <div class="small">Pontos: <span style="font-weight:700">${user.pontos}</span></div>
+            <div class="small">Cursos: ${completedCount}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  if (sortedUsers.length === 0) {
+       list.innerHTML = '<div class="small">Comece a fazer cursos para aparecer aqui!</div>';
+  }
+}
+
+/* --- NOVO: Visualização de Certificado (Mockup) --- */
+function viewCertificate(courseTitle) {
+    const id = localStorage.getItem(STORAGE.CURRENT);
+    const users = load(STORAGE.USERS);
+    const user = users.find(u => u.id === id);
+
+    if (!user) return alert('Faça login para ver o certificado.');
+
+    const date = new Date().toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const certificateHTML = `
+        <div style="padding:20px; background:#f0f8ff; color:#0a2342; border:10px solid #1d3557; border-radius:15px; text-align:center; max-width:600px; margin:0 auto; font-family:serif;">
+            <h1 style="color:#0a2342; font-size:28px;">CERTIFICADO DE CONCLUSÃO</h1>
+            <p style="font-size:16px;">Certificamos que</p>
+            <h2 style="font-size:40px; color:#3aa0ff; margin:10px 0; border-bottom:3px solid #3aa0ff; display:inline-block; padding:0 15px;">${user.nome.toUpperCase()}</h2>
+            <p style="font-size:16px;">Completou com sucesso o curso</p>
+            <h3 style="font-size:28px; color:#1d3557; margin:5px 0;">"${courseTitle.toUpperCase()}"</h3>
+            <p style="font-size:14px; margin-top:20px;">Emitido pela SANTOS INOVACTION STARTUPS em: ${date}</p>
+            <div style="margin-top:30px; display:flex; justify-content:space-around;">
+                <div><p style="border-top:1px solid #0a2342; padding-top:5px;">Assinatura Digital</p></div>
+                <div><p style="border-top:1px solid #0a2342; padding-top:5px;">RH/Coordenação</p></div>
+            </div>
+        </div>
+    `;
+
+    // Abrir em nova janela para simular o certificado
+    const certWindow = window.open('', '_blank', 'width=700,height=600');
+    certWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <title>Certificado - ${courseTitle}</title>
+            <style>body { margin: 20px; background: #cccccc; }</style>
+        </head>
+        <body>${certificateHTML}</body>
+        </html>
+    `);
+    certWindow.document.close();
+}
+
+
+/* progress functions */
+function updateAndRender(callback){
+  const id = localStorage.getItem(STORAGE.CURRENT); if(!id) return;
+  const users = load(STORAGE.USERS);
+  const uIndex = users.findIndex(u=>u.id===id);
+  if(uIndex===-1) return;
+  
+  if (!users[uIndex].cv) users[uIndex].cv = {};
+
+  callback(users[uIndex]);
+
+  save(STORAGE.USERS, users);
+  renderUser();
+}
+
+/* CV and Profile functions */
+function renderCVProfile() {
+    const id = localStorage.getItem(STORAGE.CURRENT);
+    if (!id) return;
+    const users = load(STORAGE.USERS);
+    const user = users.find(u => u.id === id);
+    if (!user) return;
+
+    const nameParts = user.nome.split(' ').filter(s=>s.length > 0);
+    const initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase() : (nameParts[0] ? nameParts[0][0] : 'S').toUpperCase();
+    const cvSummary = document.getElementById('cv-profile-summary');
+    
+    cvSummary.innerHTML = `
+      <div class="avatar">${initials}</div>
+      <div style="flex:1">
+          <div style="font-weight:800; font-size:17px">${user.nome}</div>
+          <div class="small">${user.funcao} | Área: ${user.questionario?.area || 'Não Definida'}</div>
+          <div style="margin-top:8px;">
+            <div class="small">Pontos Acumulados: <span class="badge" style="background:var(--accent);">${user.pontos || 0}</span></div>
+            <div class="small" style="margin-top:5px;">Medalhas: ${user.medalhas?.join(' • ') || 'Nenhuma'}</div>
+          </div>
+      </div>
+    `;
+
+    document.getElementById('cv-resumo').value = user.cv?.resumo || '';
+    document.getElementById('cv-experiencia').value = user.cv?.experiencia || '';
+    document.getElementById('cv-habilidades').value = user.cv?.habilidades || '';
+}
+
+function saveCV() {
+    updateAndRender(user => {
+        user.cv = user.cv || {};
+        user.cv.resumo = document.getElementById('cv-resumo').value.trim();
+        user.cv.experiencia = document.getElementById('cv-experiencia').value.trim();
+        user.cv.habilidades = document.getElementById('cv-habilidades').value.trim();
+        alert('Currículo salvo com sucesso!');
+        renderCVProfile();
+    });
+}
+
+function exportInternalCV() {
+    const id = localStorage.getItem(STORAGE.CURRENT);
+    if (!id) return alert('Faça login primeiro.');
+    const users = load(STORAGE.USERS);
+    const user = users.find(u => u.id === id);
+    if (!user) return;
+
+    const cvData = `
+        CURRÍCULO INTERNO - SANTOS INOVACTION
+        ------------------------------------------
+        Nome: ${user.nome}
+        Função Atual: ${user.funcao}
+        Área de Foco: ${user.questionario?.area || 'Não Definida'}
+        Pontos Acumulados: ${user.pontos || 0}
+        Medalhas: ${user.medalhas?.join(', ') || 'Nenhuma'}
+        
+        RESUMO PROFISSIONAL
+        ------------------------------------------
+        ${user.cv?.resumo || 'N/A'}
+        
+        EXPERIÊNCIA RECENTE
+        ------------------------------------------
+        ${user.cv?.experiencia || 'N/A'}
+
+        HABILIDADES CHAVE
+        ------------------------------------------
+        ${user.cv?.habilidades || 'N/A'}
+
+        TRILHA DE APRENDIZADO (Cursos Concluídos: ${user.courses?.filter(c=>c.completed).length || 0})
+        ------------------------------------------
+        ${user.courses?.filter(c => c.completed).map(c => `- ${c.title} (${c.duration})`).join('\n') || 'Nenhum curso concluído.'}
+    `;
+
+    const blob = new Blob([cvData], { type: 'text/plain;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `CV_${user.nome.replace(/\s/g, '_')}_Inovaction.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    alert('Exportando currículo interno (TXT)...');
+}
+
+function addProgress(courseId, amount){
+  updateAndRender(user => {
+    const cIndex = user.courses.findIndex(c=>c.id===courseId); if(cIndex===-1) return;
+    const course = user.courses[cIndex];
+    course.progress = Math.min(100, (course.progress || 0) + amount);
+    if(course.progress >= 100 && !course.completed){
+      course.completed = true; 
+      user.pontos = (user.pontos || 0) + (course.points || 5); 
+      awardMedals(user);
+      alert(`Parabéns! Você concluiu o curso "${course.title}" e ganhou ${course.points || 5} pontos!`);
+    }
+  });
+}
+function completeCourse(courseId){ addProgress(courseId, 100); }
+function awardMedals(user){
+  const completed = user.courses.filter(c=>c.completed).length;
+  const medals = [];
+  if(completed >= 1) medals.push('🥉 Iniciante');
+  if(completed >= 3) medals.push('🥈 Intermediário');
+  if(completed >= 5) medals.push('🥇 Avançado');
+  if(completed >= 8) medals.push('🏆 Master');
+  user.medalhas = medals;
+}
+
+function goToQuestionnaire(){ switchTabByName('courses'); }
+function onAreaChange(){ 
+  const val=document.getElementById('select-area').value; 
+  const isOther = ![
+    'Desenvolvimento-FullStack', 'Desenvolvimento-FrontEnd', 'Desenvolvimento-BackEnd', 
+    'Marketing', 'RH', 'Financeiro', 'Administrativo', 'Design', 'Dados', 'Vendas'
+  ].includes(val);
+  document.getElementById('other-area-field').classList.toggle('hidden', val !== 'Outra'); 
+}
+function submitQuestionnaire(){
+  const area = document.getElementById('select-area').value;
+  const other = document.getElementById('input-other-area').value.trim();
+  const suggestion = document.getElementById('input-suggestion').value.trim();
+  const id = localStorage.getItem(STORAGE.CURRENT); 
+  if(!id){ alert('Faça login primeiro.'); switchTabByName('home'); return; }
+  
+  // Validação simples
+  if(area === 'Outra' && !other) {
+    alert('Por favor, especifique a área em "Outra".');
+    return;
+  } else if (!area) {
+    alert('Selecione sua área.');
+    return;
+  }
+  
+  const users = load(STORAGE.USERS); 
+  const uIndex = users.findIndex(u=>u.id===id); 
+  if(uIndex===-1) return;
+  
+  let chosenArea = area === 'Outra' ? (other || 'Outra') : area;
+  
+  users[uIndex].questionario = { area: chosenArea, suggestion, updated: new Date().toISOString() };
+  
+  const courses = [];
+  const base = baseCoursesByArea[chosenArea];
+  if(base){
+    base.forEach(c=>courses.push({...c, progress: Math.floor(Math.random() * 50), completed:false})); // Progresso aleatório
+  } else { 
+    courses.push({id:'x1', title:`Introdução a ${chosenArea}`, duration:'8h', level:'Iniciante', points:6, progress: Math.floor(Math.random() * 50), completed:false}); 
+    courses.push({id:'x2', title:`Fundamentos de ${chosenArea}`, duration:'12h', level:'Iniciante', points:8, progress: Math.floor(Math.random() * 50), completed:false}); 
+    courses.push({id:'x3', title:`Práticas em ${chosenArea}`, duration:'10h', level:'Pleno', points:10, progress: Math.floor(Math.random() * 50), completed:false});
+  }
+  courses.push({id:'core1', title:'Cultura & Metodologias Ágeis', duration:'6h', level:'Iniciante', points:5, progress: Math.floor(Math.random() * 50), completed:false});
+  
+  users[uIndex].courses = courses; 
+  save(STORAGE.USERS, users); 
+  renderUser(); 
+  showRecommendations(chosenArea); 
+  switchTabByName('home');
+  document.getElementById('home-logged-out').classList.add('hidden'); 
+  document.getElementById('home-logged-in').classList.remove('hidden');
+}
+function showRecommendations(area){
+  document.getElementById('recommended-area').classList.remove('hidden');
+  const container = document.getElementById('recommended-list'); 
+  container.innerHTML = `<p class="small">Alguns cursos disponíveis em <strong>${area}</strong> que foram adicionados à sua trilha:</p>`;
+  
+  const list = baseCoursesByArea[area] || [];
+  if(list.length===0){
+    container.innerHTML = `<div class="small">Geramos uma trilha inicial para a área "${area}". Caso queira adicionar mais cursos, sugira no campo acima!</div>`;
+  } else {
+     container.innerHTML += list.slice(0, 3).map(c => `
+        <div class="course" style="border-left-color:var(--degrade-start)">
+            <strong>${c.title}</strong>
+            <div class="small">${c.duration} • ${c.level}</div>
+        </div>
+     `).join('');
+  }
+}
+
+/* events */
+function registerEvent(button, eventName){
+  const id = localStorage.getItem(STORAGE.CURRENT); 
+  if(!id){ alert('Faça login para se inscrever.'); switchTabByName('home'); return; }
+
+  updateAndRender(user => {
+    if(!user.events) user.events = [];
+    if(user.events.includes(eventName)){
+      alert(`Você já está inscrito(a) em "${eventName}".`);
+      return;
+    }
+    user.events.push(eventName);
+    button.textContent = 'Inscrito ✅';
+    button.disabled = true;
+    alert(`Inscrição para "${eventName}" confirmada!`);
+  });
+  renderMyEvents();
+}
+
+function renderMyEvents(){
+  const id = localStorage.getItem(STORAGE.CURRENT); 
+  if(!id) return;
+  const users = load(STORAGE.USERS); 
+  const user = users.find(u=>u.id===id);
+  
+  const container = document.getElementById('my-events');
+  if(!user || !user.events || user.events.length === 0){
+    container.innerHTML = 'Nenhum evento agendado.';
+    return;
+  }
+  
+  container.innerHTML = user.events.map(event => `
+    <div style="padding:10px; border-bottom:1px solid var(--input-border); display:flex; justify-content:space-between; align-items:center;">
+        <span>${event}</span>
+        <span class="badge" style="background:var(--accent); font-size:12px;">Confirmado</span>
+    </div>
+  `).join('');
+}
+
+
+/* feedback */
+function showFeedback(){ 
+  switchTabByName('feedback'); 
+}
+function closeFeedbackView(){ 
+  document.getElementById('view-feedback').classList.add('hidden'); 
+  const tabs = document.querySelectorAll('.tab.active');
+  if (tabs.length > 0) {
+    switchTabByName(tabs[0].getAttribute('data-view'));
+  } else {
+    switchTabByName('home');
+  }
+}
+function sendFeedback(){ 
+  const txt=document.getElementById('fb-text').value.trim(); 
+  if(!txt){ alert('Escreva algo antes de enviar.'); return; } 
+  
+  const fb=load(STORAGE.FEEDBACKS); 
+  const cur=localStorage.getItem(STORAGE.CURRENT); 
+  const users=load(STORAGE.USERS); 
+  const user=users.find(u=>u.id===cur); 
+  
+  fb.push({user: user ? user.nome : 'Anônimo', funcao: user ? user.funcao : '', text: txt, date: new Date().toISOString()}); 
+  save(STORAGE.FEEDBACKS, fb); 
+  document.getElementById('fb-text').value=''; 
+  alert('Obrigado pelo feedback! Ele foi enviado ao RH/Admin.'); 
+  closeFeedbackView(); 
+}
+
+/* admin */
+function openAdminPrompt(e){ 
+  e && e.preventDefault && e.preventDefault(); 
+  const pass = prompt('Senha administrativa:'); 
+  if(pass !== '1234'){ alert('Senha incorreta'); return; } 
+  renderAdminTable(); 
+  switchTabByName('admin'); 
+}
+function renderAdminTable(){ 
+  const tbody=document.querySelector('#admin-table tbody'); 
+  tbody.innerHTML=''; 
+  const users=load(STORAGE.USERS); 
+  const feedbacks=load(STORAGE.FEEDBACKS); // NOVO: Traz os feedbacks
+  
+  if(users.length===0 && feedbacks.length===0){ 
+    tbody.innerHTML='<tr><td colspan="6">Nenhum registro.</td></tr>'; 
+    return;
+  } 
+  
+  // Tabela principal de usuários
+  let userRows = users.map(u => {
+    const q=u.questionario||{}; 
+    return `<tr><td>${u.nome}</td><td>${u.funcao}</td><td>${q.area||'-'}</td><td>${(q.suggestion||q.sugestao||'-').substring(0, 30)}...</td><td>${u.pontos||0}</td><td>${(u.medalhas||[]).join(' • ') || '-'}</td></tr>`;
+  }).join('');
+  tbody.innerHTML = userRows;
+  
+  // Exibe feedbacks no final da tabela Admin (ou crie uma nova seção)
+  if (feedbacks.length > 0) {
+      document.getElementById('view-admin-panel').insertAdjacentHTML('beforeend', `
+          <h3 style="margin-top:20px;">Feedbacks Recebidos (${feedbacks.length})</h3>
+          <div style="overflow:auto;margin-top:8px">
+              <table style="margin-bottom:20px;">
+                  <thead><tr><th>Usuário</th><th>Função</th><th>Feedback</th><th>Data</th></tr></thead>
+                  <tbody>
+                      ${feedbacks.map(f => `
+                          <tr>
+                              <td>${f.user}</td>
+                              <td>${f.funcao || '-'}</td>
+                              <td>${f.text.substring(0, 50)}...</td>
+                              <td>${new Date(f.date).toLocaleDateString('pt-BR')}</td>
+                          </tr>
+                      `).join('')}
+                  </tbody>
+              </table>
+          </div>
+      `);
+  }
+}
+function closeAdmin(){ switchTabByName('home'); }
+function exportCSV(){ 
+  const users=load(STORAGE.USERS); 
+  if(!users.length){ alert('Nenhum dado para exportar'); return; } 
+  const header=['nome','funcao','area','sugestao','pontos','medalhas','eventos_agendados','cv_resumo','cv_experiencia','cv_habilidades','created']; 
+  const rows=users.map(u=>{ 
+    const q=u.questionario||{}; 
+    const cv=u.cv||{};
+    return [
+      `"${(u.nome||'').replace(/"/g,'""')}"`,
+      `"${(u.funcao||'').replace(/"/g,'""')}"`,
+      `"${(q.area||'').replace(/"/g,'""')}"`,
+      `"${(q.suggestion||q.sugestao||'').replace(/"/g,'""')}"`,
+      u.pontos||0,
+      `"${(u.medalhas||[]).join(';')}"`,
+      `"${(u.events||[]).join(';')}"`, 
+      `"${(cv.resumo||'').replace(/"/g,'""')}"`, 
+      `"${(cv.experiencia||'').replace(/"/g,'""')}"`, 
+      `"${(cv.habilidades||'').replace(/"/g,'""')}"`, 
+      `"${u.created||''}"`
+    ].join(','); 
+  }); 
+  const csv=[header.join(','), ...rows].join('\n'); 
+  const blob=new Blob([csv], { type:'text/csv;charset=utf-8;' }); 
+  const url=URL.createObjectURL(blob); 
+  const a=document.createElement('a'); 
+  a.href = url; 
+  a.download='santos_inovaction_colaboradores_v2.csv'; 
+  document.body.appendChild(a); 
+  a.click(); 
+  a.remove(); 
+  URL.revokeObjectURL(url);
+  alert('Exportação de dados completa (CSV).');
+}
+function clearAll(){ 
+  if(!confirm('ATENÇÃO: Isso excluirá TODOS os registros salvos localmente no seu navegador para esta plataforma! Deseja continuar?')) return; 
+  localStorage.removeItem(STORAGE.USERS); 
+  localStorage.removeItem(STORAGE.FEEDBACKS); 
+  localStorage.removeItem(STORAGE.CURRENT); 
+  renderAdminTable(); 
+  alert('Registros removidos. A plataforma foi reiniciada.'); 
+  switchTabByName('home'); 
+  logoutView(); 
+}
+
+/* util */
+function logout(){ 
+  localStorage.removeItem(STORAGE.CURRENT); 
+  onlineUsers = Math.max(3, onlineUsers - 1); // Simula a saída
+  updateOnlineStatus(null);
+  logoutView(); 
+}
+function logoutView(){ 
+  document.getElementById('home-logged-in').classList.add('hidden'); 
+  document.getElementById('home-logged-out').classList.remove('hidden'); 
+  document.getElementById('input-nome').value=''; 
+  document.getElementById('input-funcao').value=''; 
+}
+
+/* --- NOVO: Funções de Geração de Dados Fictícios --- */
+function generateMockUser(id) {
+    const roles = ['Desenvolvedor', 'Analista', 'Marketing', 'RH', 'Estagiário'];
+    const areas = ['Desenvolvimento-FullStack', 'Marketing', 'RH', 'Financeiro'];
+    const names = ['Ana Silva', 'Bruno Costa', 'Carlos Mello', 'Diana Freire', 'Eduardo Lima', 'Fábia Gomes', 'Gilberto Reis', 'Helena Dias', 'Igor Santos', 'Júlia Alves'];
+    
+    const randomName = names[id % names.length];
+    const randomRole = roles[id % roles.length];
+    const randomArea = areas[id % areas.length];
+    const randomPoints = Math.floor(Math.random() * 20) * 5; // Múltiplos de 5
+    
+    // Gera cursos com progresso aleatório (0 a 50%)
+    const courses = (baseCoursesByArea[randomArea] || []).map(c => ({
+        ...c,
+        progress: Math.floor(Math.random() * 50),
+        completed: false
+    }));
+    
+    // Conclui 1 curso aleatoriamente (para ter medalhas/pontos)
+    if (courses.length > 0) {
+        courses[0].progress = 100;
+        courses[0].completed = true;
+    }
+
+    const mockUser = {
+        id: 'mock'+id,
+        nome: randomName + (id >= names.length ? (' ' + id) : ''),
+        funcao: randomRole,
+        questionario: { area: randomArea, suggestion: 'Adicionar curso de IA.', updated: new Date().toISOString() },
+        pontos: randomPoints + (courses[0]?.points || 0),
+        medalhas: courses.length > 0 && courses[0].completed ? ['🥉 Iniciante'] : [],
+        courses: courses,
+        events: [],
+        created: new Date().toISOString(),
+        cv: { resumo: 'Mock CV - Profissional com foco em resultados.', experiencia: 'Empresa Fictícia, Cargo, 2020-2023', habilidades: 'Comunicação, Proatividade' }
+    };
+    
+    awardMedals(mockUser); // Atualiza medalhas com base no curso concluído
+    return mockUser;
+}
+
+function generateMockData() {
+    let users = load(STORAGE.USERS);
+    let feedbacks = load(STORAGE.FEEDBACKS);
+
+    // Se a lista de usuários estiver vazia, gera 10 mock users
+    if (users.length === 0) {
+        for (let i = 0; i < 10; i++) {
+            users.push(generateMockUser(i));
+        }
+        save(STORAGE.USERS, users);
+    }
+
+    // Se não houver feedbacks, gera 5 mock feedbacks
+    if (feedbacks.length === 0) {
+        feedbacks.push({ user: 'Admin Teste', funcao: 'CEO', text: 'Plataforma fantástica! Continuem assim.', date: new Date().toISOString() });
+        feedbacks.push({ user: 'Mock User 1', funcao: 'Marketing', text: 'Sugiro integrar com o calendário do Google.', date: new Date().toISOString() });
+        feedbacks.push({ user: 'Mock User 2', funcao: 'Desenvolvedor', text: 'Tive um pequeno bug na aba CV, vou enviar a tela.', date: new Date().toISOString() });
+        feedbacks.push({ user: 'Mock User 3', funcao: 'RH', text: 'Ótima usabilidade no celular.', date: new Date().toISOString() });
+        feedbacks.push({ user: 'Mock User 4', funcao: 'Financeiro', text: 'Poderia ter um dashboard de progresso.', date: new Date().toISOString() });
+        save(STORAGE.FEEDBACKS, feedbacks);
+    }
+}
+
+
+/* init */
+(function init(){ 
+  renderLogo(); 
+  
+  // NOVO: Gera dados fictícios antes de carregar o usuário
+  generateMockData(); 
+  
+  // Aplica o tema salvo no localStorage
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+      document.body.classList.add('light-theme');
+      const themeIconSpan = document.getElementById('theme-icon');
+      if (themeIconSpan) themeIconSpan.textContent = '☀️';
+  } else {
+      const themeIconSpan = document.getElementById('theme-icon');
+      if (themeIconSpan) themeIconSpan.textContent = '🌙';
+  }
+  
+  if(!localStorage.getItem(STORAGE.USERS)) save(STORAGE.USERS, []); 
+  if(!localStorage.getItem(STORAGE.FEEDBACKS)) save(STORAGE.FEEDBACKS, []); 
+  
+  const cur=localStorage.getItem(STORAGE.CURRENT); 
+  if(cur){ 
+    const users = load(STORAGE.USERS);
+    const user = users.find(u=>u.id===cur);
+    if(user){
+        user.online = true; // Marca usuário atual como online
+        updateOnlineStatus(user);
+        renderUser(); 
+        renderMyEvents();
+        document.getElementById('home-logged-out').classList.add('hidden'); 
+        document.getElementById('home-logged-in').classList.remove('hidden'); 
+        
+        if(user.questionario && user.questionario.area){
+          const area = user.questionario.area;
+          const select = document.getElementById('select-area');
+          const option = Array.from(select.options).find(o => o.value === area);
+          if (option) {
+            select.value = area;
+          } else {
+            const otherOption = Array.from(select.options).find(o => o.value === 'Outra');
+            if (otherOption) {
+                select.value = 'Outra';
+                document.getElementById('other-area-field').classList.remove('hidden');
+                document.getElementById('input-other-area').value = area;
+            } else {
+                select.selectedIndex = 0; 
+            }
+          }
+          document.getElementById('input-suggestion').value = user.questionario.suggestion || '';
+        }
+    } else {
+      logout();
+    }
+  } else {
+      updateOnlineStatus(null); // Atualiza status com contagem inicial
+      renderLeaderboard();
+  }
+})();
+</script>
+</body>
+</html>
